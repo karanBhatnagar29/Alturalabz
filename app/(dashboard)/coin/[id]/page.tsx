@@ -38,40 +38,34 @@ const Page = () => {
   console.log("Coin Data:", getCoin);
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4">
-      <div className="container mx-auto max-w-7xl bg-white rounded-lg shadow-lg p-6">
+    <div className="min-h-screen  py-10 px-4">
+      <div className="container mx-auto max-w-7xl border-2 rounded-lg shadow-lg p-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Product Image */}
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center  solid">
             <img
               src="../images/coin.png"
               alt="Product"
-              className="w-full max-w-md rounded-lg shadow-md object-cover"
+              className="w-full max-w-md rounded-lg  object-cover"
             />
           </div>
 
           {/* Product Details */}
-          <div className="flex flex-col items-center lg:items-start justify-center">
+          <div className="flex flex-col items-center lg:items-start justify-center ">
             {/* Product Title */}
 
-            <h1 className="text-5xl font-bold text-gray-800">
-              {getCoin?.name}
-            </h1>
+            <h1 className="text-5xl font-bold">{getCoin?.name}</h1>
 
             {/* Price */}
             <div className="flex items-center mt-4">
-              <p className="text-2xl font-bold text-gray-800">
-                {getCoin?.discountedPrice}
-              </p>
-              <p className="text-gray-500 line-through ml-3">
-                {getCoin?.price}
-              </p>
+              <p className="text-2xl font-bold">{getCoin?.discountedPrice}</p>
+              <p className=" line-through ml-3">{getCoin?.price}</p>
             </div>
 
             {/* Product Details */}
             <div className="mt-8">
-              <h3 className="text-xl font-semibold text-gray-800">Details</h3>
-              <ul className="mt-2 text-gray-600">
+              <h3 className="text-xl font-semibold ">Details</h3>
+              <ul className="mt-2 ">
                 <li>{getCoin?.appleSku}</li>
                 <li>{getCoin?.googleSku}</li>
               </ul>
@@ -79,12 +73,8 @@ const Page = () => {
             {/* Product Description */}
 
             <div className="mt-10">
-              <h2 className="text-2xl font-bold text-gray-800">
-                Product Description
-              </h2>
-              <p className="mt-4 text-gray-600 leading-relaxed">
-                {getCoin?.description}
-              </p>
+              <h2 className="text-2xl font-bold ">Product Description</h2>
+              <p className="mt-4  leading-relaxed">{getCoin?.description}</p>
             </div>
           </div>
         </div>

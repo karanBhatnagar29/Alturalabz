@@ -41,7 +41,7 @@ const Page = () => {
 
   return (
     <main className="p-6 container mx-auto grid grid-cols-1 md:grid-cols-[.5fr,1fr] gap-6">
-      <div className="bg-white shadow rounded-lg p-6 flex flex-col items-center">
+      <div className="border-gray-300 shadow rounded-lg p-6 flex flex-col items-center">
         <img
           src="../images/coin.png"
           alt="coin image"
@@ -49,14 +49,11 @@ const Page = () => {
         />
         <Button className="mt-4">Upload Image</Button>
       </div>
-      <div className="bg-white shadow rounded-lg p-6">
+      <div className=" shadow rounded-lg p-6">
         <form onSubmit={handleSubmit} id="productForm" className="space-y-6">
           {/* Product Name */}
           <div>
-            <label
-              htmlFor="product-name"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
+            <label htmlFor="product-name" className="block font-medium ">
               Product Name
             </label>
             <input
@@ -66,17 +63,14 @@ const Page = () => {
               placeholder="Enter product name"
               value={formData.name}
               required
-              className="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full rounded-lg shadow-sm p-2"
               onChange={handleInputChange}
             />
           </div>
 
           {/* Price */}
           <div>
-            <label
-              htmlFor="price"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
+            <label htmlFor="price" className="block font-medium ">
               Price
             </label>
             <input
@@ -85,7 +79,7 @@ const Page = () => {
               name="price"
               placeholder="Enter product price"
               required
-              className="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full p-2 rounded-lg shadow-sm "
               onChange={handleInputChange}
               value={formData.price}
             />
@@ -93,16 +87,13 @@ const Page = () => {
 
           {/* Discount */}
           <div>
-            <label
-              htmlFor="discountPrice"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
+            <label htmlFor="discountPrice" className="block  font-medium ">
               Discount
             </label>
             <input
               type="text"
               name="discountedPrice"
-              className="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full p-2 rounded-lg shadow-sm "
               id="discountPrice"
               value={formData.discountedPrice}
               onChange={handleInputChange}
@@ -112,10 +103,7 @@ const Page = () => {
 
           {/* Coin Amount */}
           <div>
-            <label
-              htmlFor="coinAmount"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
+            <label htmlFor="coinAmount" className="block  font-medium mb-2">
               Coin Amount
             </label>
             <input
@@ -124,17 +112,14 @@ const Page = () => {
               name="coinAmount"
               placeholder="Enter coin amount"
               required
-              className="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full p-2 rounded-lg shadow-sm "
               onChange={handleInputChange}
             />
           </div>
 
           {/* Description */}
           <div>
-            <label
-              htmlFor="description"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
+            <label htmlFor="description" className="block font-medium ">
               Description
             </label>
             <textarea
@@ -143,7 +128,7 @@ const Page = () => {
               rows={4}
               placeholder="Enter product description"
               required
-              className="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full p-2 rounded-lg shadow-sm "
               value={formData.description}
               onChange={handleInputChange}
             ></textarea>

@@ -1,7 +1,6 @@
 "use client";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Calendar, Coins, Home, Search, Settings, User } from "lucide-react";
 import Link from "next/link";
-
 import {
   Sidebar,
   SidebarContent,
@@ -26,12 +25,12 @@ const items = [
   {
     title: "User",
     url: "/users",
-    icon: Inbox,
+    icon: User,
   },
   {
     title: "Coin Bundle",
     url: "/coin",
-    icon: Inbox,
+    icon: Coins,
   },
   {
     title: "Calendar",
@@ -56,7 +55,12 @@ export function AppSidebar() {
       <Sidebar>
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel>Alturalabz</SidebarGroupLabel>
+            <div className="flex  items-center justify-between mb-4">
+              <SidebarGroupLabel className="text-lg">
+                Alturalabz
+              </SidebarGroupLabel>
+            </div>
+
             <SidebarGroupContent>
               <SidebarMenu>
                 {items.map((item) => (

@@ -13,7 +13,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-
 interface CoinData {
   name: string;
   price: number;
@@ -92,8 +91,10 @@ const Page = () => {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={4} className="text-center">
-                  Loading data...
+                <TableCell colSpan={4} className="w-full h-screen text-center">
+                  <div className="flex justify-center items-center min-h-screen">
+                    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
+                  </div>
                 </TableCell>
               </TableRow>
             )}

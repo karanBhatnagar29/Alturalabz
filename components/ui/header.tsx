@@ -1,86 +1,60 @@
-import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Switch } from "@/components/ui/switch";
+"use client";
+
+import * as React from "react";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
+  const { setTheme } = useTheme();
   return (
     <div className="w-full z-20 -ml-1">
-      <div className="bg-white px-10 py-4 flex items-center justify-between w-full">
-        {/* Left Section */}
-        <div className="flex items-center space-x-4">
-          {/* Logo */}
-          <div className="text-2xl font-bold text-black-600">Dashboard</div>
+      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+        <header className="flex h-20 w-full shrink-0 items-center px-4 md:px-6">
+          <h1 className="text-3xl">Dashboard</h1>
+          <div className="ml-auto flex gap-2">
+            {/* <Button variant="outline" className="justify-self-end">
+              Sign in
+            </Button>
+            <Button className="justify-self-end">Sign Up</Button> */}
 
-          {/* Search Bar */}
-          <div className="hidden md:block">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="border border-gray-300 rounded-md py-2 px-4 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            />
+            <div className="ml-5">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                    <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                    <span className="sr-only">Toggle theme</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => setTheme("light")}>
+                    Light
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setTheme("dark")}>
+                    Dark
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setTheme("system")}>
+                    System
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <Link href="/">
+              <button className="px-4 py-2 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                Logout
+              </button>
+            </Link>
           </div>
-        </div>
-
-        {/* Right Section */}
-        <div className="flex items-center space-x-10">
-          {/* Navigation Links */}
-          <nav className="hidden md:flex space-x-4">
-            <a
-              href="#"
-              className="text-gray-600 hover:text-indigo-600 transition duration-200"
-            >
-              Home
-            </a>
-            <a
-              href="#"
-              className="text-gray-600 hover:text-indigo-600 transition duration-200"
-            >
-              Reports
-            </a>
-            <a
-              href="#"
-              className="text-gray-600 hover:text-indigo-600 transition duration-200"
-            >
-              Settings
-            </a>
-          </nav>
-
-          {/* Notification Icon */}
-          <button className="relative">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-6 h-6 text-gray-600 hover:text-indigo-600 transition duration-200"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 17h5l-1.405-1.405M9 17H4l1.405-1.405M6 12H6m6-3a9 9 0 11-3.555 17.671M9 7a3 3 0 100-6 3 3 0 000 6z"
-              />
-            </svg>
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-              3
-            </span>
-          </button>
-
-          {/* Profile Dropdown */}
-          <div className="relative flex items-center justify-center gap-2">
-            <button className=" flex items-center justify-center gap-1">
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-
-              <span className="hidden md:block text-gray-600 font-medium">
-                John Doe
-              </span>
-            </button>
-            <Switch />
-          </div>
-        </div>
+        </header>
       </div>
     </div>
   );

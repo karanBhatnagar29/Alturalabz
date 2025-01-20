@@ -72,23 +72,20 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
   };
 
   return (
-    <div>
-      <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-8">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">Edit Product</h1>
+    <div className=" flex items-center justify-center">
+      <div className="w-full h-screen  shadow-md rounded-lg p-8">
+        <h1 className="text-2xl font-bold mb-6">Edit Product</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Product Name */}
           <div>
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="name" className="block  font-medium ">
               Product Name
             </label>
             <input
               type="text"
               id="name"
               name="name"
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md shadow-sm p-2  sm:text-sm"
               placeholder="Enter product name"
               value={coinData?.name || ""}
               onChange={handleInputChange}
@@ -97,17 +94,14 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
 
           {/* Product Description */}
           <div>
-            <label
-              htmlFor="description"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="description" className="block font-medium ">
               Description
             </label>
             <textarea
               id="description"
               name="description"
               rows={4}
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full  rounded-md shadow-sm p-2 sm:text-sm"
               placeholder="Enter product description"
               value={coinData?.description || ""}
               onChange={handleInputChange}
@@ -116,17 +110,14 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
 
           {/* Product Price */}
           <div>
-            <label
-              htmlFor="price"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="price" className="block  font-medium">
               Price
             </label>
             <input
               type="number"
               id="price"
               name="price"
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md shadow-sm p-2 sm:text-sm"
               value={coinData?.price || ""}
               onChange={handleInputChange}
             />
@@ -134,17 +125,14 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
 
           {/* Discounted Price */}
           <div>
-            <label
-              htmlFor="discountedPrice"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="discountedPrice" className="block font-medium ">
               Discounted Price
             </label>
             <input
               type="number"
               id="discountedPrice"
               name="discountedPrice"
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md shadow-sm p-2 sm:text-sm"
               value={coinData?.discountedPrice || ""}
               onChange={handleInputChange}
             />
@@ -152,17 +140,14 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
 
           {/* Coin Amount */}
           <div>
-            <label
-              htmlFor="coinAmount"
-              className="block text-sm font-medium text-gray-700"
-            >
+            <label htmlFor="coinAmount" className="block font-medium ">
               Coin Amount
             </label>
             <input
               type="number"
               id="coinAmount"
               name="coinAmount"
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 sm:text-sm"
               value={coinData?.coinAmount || ""}
               onChange={handleInputChange}
             />

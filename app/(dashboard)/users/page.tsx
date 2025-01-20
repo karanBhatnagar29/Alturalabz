@@ -1,79 +1,147 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import { useState } from "react";
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+
+import React, { useState } from "react";
 import data from "@/app/data.json";
+import Link from "next/link";
+
+const USERS_PER_PAGE = 7; // Number of users per page
 
 export default function Component() {
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 10;
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
-  // Calculate the users to display
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = data.slice(indexOfFirstUser, indexOfLastUser);
+  // Filter data based on search query
+  const filteredData = data.filter(
+    (user) =>
+      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.mobile.includes(searchQuery)
+  );
 
-  // Calculate total pages
-  const totalPages = Math.ceil(data.length / usersPerPage);
+  // Calculate total pages based on filtered data
+  const totalPages = Math.ceil(filteredData.length / USERS_PER_PAGE);
+
+  // Get current page data
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * USERS_PER_PAGE,
+    currentPage * USERS_PER_PAGE
+  );
+
+  // Handle pagination
+  const handleNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
 
   return (
-    <div className="w-full p-6">
-      <div className="flex flex-col space-y-6 w-full h-full border border-gray-200 p-3 rounded-lg">
-        <div className="overflow-x-auto w-full">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>User ID</TableHead>
-                <TableHead>First Name</TableHead>
-                <TableHead>Last Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {currentUsers.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell>{user.id}</TableCell>
-                  <TableCell>{user.firstName}</TableCell>
-                  <TableCell>{user.lastName}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
-                    <Link href={`/users/${user.id}`}>
-                      <Button>Edit</Button>
-                    </Link>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+    <div className="min-h-screen  py-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto rounded-lg shadow-md p-6">
+        {/* Header Section */}
+        <div className="flex justify-between items-center mb-6">
+          <div>
+            <h1 className="text-xl font-bold ">User List</h1>
+            <p className="text-sm">Auto-updates in 2 min</p>
+          </div>
+          {/* Search Input */}
+          <div>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by name, email, or mobile"
+              className="px-4 py-2 rounded-md border"
+            />
+          </div>
         </div>
-      </div>
-      <div className="flex justify-center space-x-2 mt-5">
-        <Button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </Button>
-        <span className="text-sm flex items-center">
-          Page {currentPage} of {totalPages}
-        </span>
-        <Button
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </Button>
+
+        {/* Table Section */}
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y ">
+            <thead>
+              <tr>
+                <th className="px-4 py-2 text-left text-sm font-medium">
+                  User No.
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-medium ">
+                  Name of User
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-medium ">
+                  Date
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-medium ">
+                  Email
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-medium">
+                  Mobile Number
+                </th>
+                <th className="px-4 py-2 text-left text-sm font-medium">
+                  Status{" "}
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y ">
+              {paginatedData.map((curUser) => (
+                <tr key={curUser.id} className="cursor-pointer">
+                  <td className="px-4 py-3 text-sm ">#{curUser.id}</td>
+                  <td className="px-4 py-3 text-sm flex items-center space-x-3">
+                    <Link
+                      href={`/users/${curUser.id}`}
+                      className="flex items-center space-x-3"
+                    >
+                      <img
+                        src={curUser.avatar}
+                        alt="Avatar"
+                        className="w-8 h-8 rounded-full"
+                      />
+                      <span>{curUser.name}</span>
+                    </Link>
+                  </td>
+                  <td className="px-4 py-3 text-sm">{curUser.date}</td>
+                  <td className="px-4 py-3 text-sm ">{curUser.email}</td>
+                  <td className="px-4 py-3 text-sm ">{curUser.mobile}</td>
+                  <td className="px-4 py-3 text-sm">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100  text-green-800">
+                      Online
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="flex justify-between items-center mt-6">
+          <button
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 rounded-md ${
+              currentPage === 1
+                ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                : "bg-gray-800 text-white hover:bg-gray-700"
+            }`}
+          >
+            Previous
+          </button>
+          <div className="text-sm text-gray-500">
+            Page {currentPage} of {totalPages}
+          </div>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 rounded-md ${
+              currentPage === totalPages
+                ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                : "bg-gray-800 text-white hover:bg-gray-700"
+            }`}
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );
