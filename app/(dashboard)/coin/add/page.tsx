@@ -6,8 +6,11 @@ import axios from "axios";
 import { useRouter } from "next/navigation"; // Import the useRouter hook
 import { IoArrowBackOutline } from "react-icons/io5";
 import Link from "next/link";
+import { useToast } from "@/hooks/use-toast";
 
 const Page = () => {
+  const { toast } = useToast();
+
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -138,7 +141,17 @@ const Page = () => {
 
           {/* Submit Button */}
           <div className=" flex items-center justify-end gap-2">
-            <Button type="submit">Add Product</Button>
+            <Button
+              type="submit"
+              onClick={() => {
+                toast({
+                  title: "Coin Added successfully✅ ",
+                  description: "Check Coin Page",
+                });
+              }}
+            >
+              Add Coin
+            </Button>
             <Link href="/coin">
               <Button>
                 <IoArrowBackOutline />
