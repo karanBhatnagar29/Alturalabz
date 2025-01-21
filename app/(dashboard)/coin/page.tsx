@@ -48,8 +48,8 @@ const Page = () => {
           <Button className="m-5">Add Coin</Button>
         </Link>
       </div>
-      <div className="p-5">
-        <Table className="mx-auto border border-gray-200">
+      <div className="overflow-x-auto">
+        <Table className="min-w-full divide-y shadow">
           <TableCaption>List of Coins</TableCaption>
           <TableHeader>
             <TableRow>

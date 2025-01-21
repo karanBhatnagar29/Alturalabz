@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 const Page = ({ params }: { params: Promise<{ id: number }> }) => {
   const router = useRouter();
@@ -154,8 +156,13 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
           </div>
 
           {/* Submit Button */}
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2">
             <Button type="submit">Save Changes</Button>
+            <Link href="/coin">
+              <Button>
+                <IoArrowBackOutline />
+              </Button>
+            </Link>
           </div>
         </form>
       </div>

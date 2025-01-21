@@ -4,6 +4,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation"; // Use `useParams` hook for dynamic route params
 import axios from "axios";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 interface GetCoin {
   name: string;
@@ -77,6 +80,13 @@ const Page = () => {
               <p className="mt-4  leading-relaxed">{getCoin?.description}</p>
             </div>
           </div>
+        </div>
+        <div className="flex justify-end">
+          <Link href="/coin">
+            <Button>
+              <IoArrowBackOutline />
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

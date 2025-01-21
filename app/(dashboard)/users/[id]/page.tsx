@@ -16,6 +16,9 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import data from "@/app/data.json";
+import Link from "next/link";
+import { IoArrowBackOutline } from "react-icons/io5";
+
 const page = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const filteredUser = data.find((user) => user.id === Number(id));
@@ -24,7 +27,14 @@ const page = ({ params }: { params: { id: string } }) => {
     <div>
       <Card>
         <CardHeader>
-          <CardTitle>Edit User {id}</CardTitle>
+          <div className="flex items-center justify-between w-full">
+            <CardTitle>Edit User {id}</CardTitle>
+            <Link href="/users">
+              <Button>
+                <IoArrowBackOutline />
+              </Button>
+            </Link>
+          </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">

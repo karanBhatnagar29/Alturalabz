@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation"; // Import the useRouter hook
+import { IoArrowBackOutline } from "react-icons/io5";
+import Link from "next/link";
 
 const Page = () => {
   const [formData, setFormData] = useState({
@@ -135,8 +137,13 @@ const Page = () => {
           </div>
 
           {/* Submit Button */}
-          <div className="text-right">
+          <div className=" flex items-center justify-end gap-2">
             <Button type="submit">Add Product</Button>
+            <Link href="/coin">
+              <Button>
+                <IoArrowBackOutline />
+              </Button>
+            </Link>
           </div>
         </form>
       </div>
