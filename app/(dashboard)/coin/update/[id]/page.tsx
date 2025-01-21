@@ -5,13 +5,14 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { IoArrowBackOutline } from "react-icons/io5";
+// import { IoArrowBackOutline } from "react-icons/io5";
 import { useToast } from "@/hooks/use-toast";
 
 const Page = ({ params }: { params: Promise<{ id: number }> }) => {
   const { toast } = useToast();
   const router = useRouter();
   const [id, setId] = useState<number | null>(null);
+  const [resData, setResData] = useState({});
 
   interface CoinData {
     name: string;
@@ -67,6 +68,7 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
     try {
       const res = await axios.put(url, coinData);
       console.log("Data updated successfully:", res.data);
+      setResData(res.data);
       router.push("/coin");
     } catch (error) {
       console.error("Error updating data:", error);
@@ -161,17 +163,19 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
             <Button
               type="submit"
               onClick={() => {
-                toast({
-                  title: "Changes saved successfully✅",
-                  description: "Check coin page",
-                });
+                if (resData)
+                  toast({
+                    title: "Changes saved successfully✅",
+                    description: "Check coin page",
+                  });
               }}
             >
-              Save Changes
+              Update
             </Button>
             <Link href="/coin">
               <Button>
-                <IoArrowBackOutline />
+                {/* <IoArrowBackOutline /> */}
+                Cancel
               </Button>
             </Link>
           </div>

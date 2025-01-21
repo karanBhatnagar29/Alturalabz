@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation"; // Import the useRouter hook
-import { IoArrowBackOutline } from "react-icons/io5";
+// import { IoArrowBackOutline } from "react-icons/io5";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 
@@ -144,17 +144,20 @@ const Page = () => {
             <Button
               type="submit"
               onClick={() => {
-                toast({
-                  title: "Coin Added successfully✅ ",
-                  description: "Check Coin Page",
-                });
+                if (!formData) {
+                  toast({
+                    title: "Coin Added successfully✅ ",
+                    description: "Check Coin Page",
+                  });
+                }
               }}
             >
               Add Coin
             </Button>
             <Link href="/coin">
               <Button>
-                <IoArrowBackOutline />
+                {/* <IoArrowBackOutline /> */}
+                Cancel
               </Button>
             </Link>
           </div>

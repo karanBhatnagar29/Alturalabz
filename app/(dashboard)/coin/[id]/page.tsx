@@ -4,9 +4,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation"; // Use `useParams` hook for dynamic route params
 import axios from "axios";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { IoArrowBackOutline } from "react-icons/io5";
+import { FaDollarSign } from "react-icons/fa";
 
 interface GetCoin {
   name: string;
@@ -38,56 +37,72 @@ const Page = () => {
     getCoinData();
   }, [id]); // Add `id` as a dependency
 
-  console.log("Coin Data:", getCoin);
-
   return (
-    <div className="min-h-screen  py-10 px-4">
-      <div className="container mx-auto max-w-7xl border-2 rounded-lg shadow-lg p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Product Image */}
-          <div className="flex items-center justify-center  solid">
-            <img
-              src="../images/coin.png"
-              alt="Product"
-              className="w-full max-w-md rounded-lg  object-cover"
-            />
-          </div>
+    <div className="p-6  m-5 rounded-xl border-2">
+      <div className="flex items-center justify-between mb-6">
+        {/* Coin Image and Action Buttons */}
+        <img
+          src="/images/coin.png"
+          alt={getCoin?.name}
+          className="w-16 h-16 object-cover rounded-full border-4 "
+        />
+        <div className="flex items-center gap-4">
+          <Button className=" hover:bg-blue-600 transition-all duration-300">
+            Edit
+          </Button>
+          <Button className="bg-red-500 text-white hover:bg-red-600 transition-all duration-300">
+            Delete
+          </Button>
+        </div>
+      </div>
 
-          {/* Product Details */}
-          <div className="flex flex-col items-center lg:items-start justify-center ">
-            {/* Product Title */}
-
-            <h1 className="text-5xl font-bold">{getCoin?.name}</h1>
-
-            {/* Price */}
-            <div className="flex items-center mt-4">
-              <p className="text-2xl font-bold">{getCoin?.discountedPrice}</p>
-              <p className=" line-through ml-3">{getCoin?.price}</p>
-            </div>
-
-            {/* Product Details */}
-            <div className="mt-8">
-              <h3 className="text-xl font-semibold ">Details</h3>
-              <ul className="mt-2 ">
-                <li>{getCoin?.appleSku}</li>
-                <li>{getCoin?.googleSku}</li>
-              </ul>
-            </div>
-            {/* Product Description */}
-
-            <div className="mt-10">
-              <h2 className="text-2xl font-bold ">Product Description</h2>
-              <p className="mt-4  leading-relaxed">{getCoin?.description}</p>
-            </div>
+      {/* Coin Price Section */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+        <div className="flex items-center justify-center gap-3  p-4 rounded-xl border-2">
+          <FaDollarSign className="text-xl text-green-500" />
+          <div className="text-lg">
+            <span className="font-semibold">Current Price</span>
+            <p className="text-2xl font-bold text-green-600">
+              {getCoin?.discountedPrice}
+            </p>
           </div>
         </div>
-        <div className="flex justify-end">
-          <Link href="/coin">
-            <Button>
-              <IoArrowBackOutline />
-            </Button>
-          </Link>
+        <div className="flex items-center justify-center gap-3  p-4 rounded-xl border-2">
+          <FaDollarSign className="text-xl text-orange-500" />
+          <div className="text-lg">
+            <span className="font-semibold ">Original Price</span>
+            <p className="text-2xl font-bold text-orange-600">
+              {getCoin?.price}
+            </p>
+          </div>
         </div>
+        <div className="flex items-center justify-center gap-3  p-4 rounded-xl border-2">
+          <FaDollarSign className="text-xl text-gray-500" />
+          <div className="text-lg">
+            <span className="font-semibold ">Coin Amount</span>
+            <p className="text-2xl font-bold">{getCoin?.coinAmount}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Additional Information Section */}
+      <p className="text-2xl font-semibold mb-4">Additional Information</p>
+      <div className="space-y-4 text-lg ">
+        <p>
+          <strong>Name:</strong> {getCoin?.name}
+        </p>
+        <p>
+          <strong>Price:</strong> {getCoin?.price}
+        </p>
+        <p>
+          <strong>Discounted Price:</strong> {getCoin?.discountedPrice}
+        </p>
+        <p>
+          <strong>Coin Amount:</strong> {getCoin?.coinAmount}
+        </p>
+        <p>
+          <strong>Description:</strong> {getCoin?.description}
+        </p>
       </div>
     </div>
   );

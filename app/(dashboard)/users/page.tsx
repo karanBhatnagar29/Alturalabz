@@ -38,12 +38,12 @@ export default function Component() {
   };
 
   return (
-    <div className="min-h-screen  py-10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto rounded-lg shadow-md p-6">
+    <div className="min-h-screen py-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto rounded-lg  p-6">
         {/* Header Section */}
         <div className="flex justify-between items-center mb-6">
           <div>
-            <h1 className="text-xl font-bold ">User List</h1>
+            <h1 className="text-2xl font-bold ">User List</h1>
             <p className="text-sm">Auto-updates in 2 min</p>
           </div>
           {/* Search Input */}
@@ -63,31 +63,23 @@ export default function Component() {
           <table className="min-w-full divide-y ">
             <thead>
               <tr>
-                <th className="px-4 py-2 text-left text-sm font-medium">
-                  User No.
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-medium ">
+                <th className="px-4 py-2 text-left font-medium">User No.</th>
+                <th className="px-4 py-2 text-left  font-medium ">
                   Name of User
                 </th>
-                <th className="px-4 py-2 text-left text-sm font-medium ">
-                  Date
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-medium ">
-                  Email
-                </th>
-                <th className="px-4 py-2 text-left text-sm font-medium">
+                <th className="px-4 py-2 text-left font-medium ">Date</th>
+                <th className="px-4 py-2 text-left  font-medium ">Email</th>
+                <th className="px-4 py-2 text-left  font-medium">
                   Mobile Number
                 </th>
-                <th className="px-4 py-2 text-left text-sm font-medium">
-                  Status{" "}
-                </th>
+                <th className="px-4 py-2 text-left  font-medium">Status </th>
               </tr>
             </thead>
             <tbody className="divide-y ">
               {paginatedData.map((curUser) => (
                 <tr key={curUser.id} className="cursor-pointer">
-                  <td className="px-4 py-3 text-sm ">#{curUser.id}</td>
-                  <td className="px-4 py-3 text-sm flex items-center space-x-3">
+                  <td className="px-4 py-3  ">#{curUser.id}</td>
+                  <td className="px-4 py-3  flex items-center space-x-3">
                     <Link
                       href={`/users/${curUser.id}`}
                       className="flex items-center space-x-3"
@@ -100,10 +92,10 @@ export default function Component() {
                       <span>{curUser.name}</span>
                     </Link>
                   </td>
-                  <td className="px-4 py-3 text-sm">{curUser.date}</td>
-                  <td className="px-4 py-3 text-sm ">{curUser.email}</td>
-                  <td className="px-4 py-3 text-sm ">{curUser.mobile}</td>
-                  <td className="px-4 py-3 text-sm">
+                  <td className="px-4 py-3 ">{curUser.date}</td>
+                  <td className="px-4 py-3  ">{curUser.email}</td>
+                  <td className="px-4 py-3  ">{curUser.mobile}</td>
+                  <td className="px-4 py-3 ">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100  text-green-800">
                       Online
                     </span>

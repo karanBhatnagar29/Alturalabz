@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 /**
  * v0 by Vercel.
  * @see https://v0.dev/t/YZ2AG5NGPJN
@@ -17,33 +18,66 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import data from "@/app/data.json";
 import Link from "next/link";
-import { IoArrowBackOutline } from "react-icons/io5";
+// import { IoArrowBackOutline } from "react-icons/io5";
+import { useToast } from "@/hooks/use-toast";
 
-const page = ({ params }: { params: { id: string } }) => {
-  const { id } = params;
-  const filteredUser = data.find((user) => user.id === Number(id));
-  console.log(filteredUser);
+const Page = ({ params }: { params: Promise<{ id: string }> }) => {
+  const { toast } = useToast();
+  const [id, setId] = useState<string | null>(null);
+  const [filteredUser, setFilteredUser] = useState<{
+    id: number;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+  } | null>(null);
+
+  useEffect(() => {
+    const fetchParams = async () => {
+      const resolvedParams = await params;
+      setId(resolvedParams.id);
+
+      const user = data.find((user) => user.id === Number(resolvedParams.id));
+      setFilteredUser(user || null);
+    };
+
+    fetchParams();
+  }, [params]);
+
+  if (!id) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div>
+    <div className="m-5">
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between w-full">
             <CardTitle>Edit User {id}</CardTitle>
             <Link href="/users">
-              <Button>
-                <IoArrowBackOutline />
-              </Button>
+              <Button>Cancel</Button>
             </Link>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="firstName">First Name</Label>
-            <Input id="firstName" placeholder="First Name" required />
+            <Input
+              id="firstName"
+              placeholder="First Name"
+              required
+              autoComplete="off"
+              defaultValue={filteredUser?.firstName || ""}
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="lastName">Last Name</Label>
-            <Input id="lastName" placeholder="Last Name" required />
+            <Input
+              id="lastName"
+              placeholder="Last Name"
+              required
+              autoComplete="off"
+              defaultValue={filteredUser?.lastName || ""}
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
@@ -52,15 +86,27 @@ const page = ({ params }: { params: { id: string } }) => {
               type="email"
               placeholder="m@example.com"
               required
+              autoComplete="off"
+              defaultValue={filteredUser?.email || ""}
             />
           </div>
         </CardContent>
         <CardFooter>
-          <Button className="w-full">Update User</Button>
+          <Button
+            className="w-full"
+            onClick={() => {
+              toast({
+                title: "User updated successfully✅",
+                description: "Check user page",
+              });
+            }}
+          >
+            Update User
+          </Button>
         </CardFooter>
       </Card>
     </div>
   );
 };
 
-export default page;
+export default Page;

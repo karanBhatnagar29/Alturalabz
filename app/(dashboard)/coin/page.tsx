@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+
 interface CoinData {
   name: string;
   price: number;
@@ -31,7 +32,6 @@ const Page = () => {
       if (res.status === 200) {
         setCoinData(res.data.data); // set the data in the state
       }
-      // console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -43,57 +43,82 @@ const Page = () => {
 
   return (
     <>
-      <div className="flex items-end justify-end">
+      <div className="flex items-center justify-between mb-5 px-4">
+        <h1 className="text-2xl font-semibold text-gray-800">Coins List</h1>
         <Link href="/coin/add">
-          <Button className="m-5">Add Coin</Button>
+          <Button className="bg-blue-600 text-white hover:bg-blue-700 transition duration-300">
+            Add Coin
+          </Button>
         </Link>
       </div>
-      <div className="overflow-x-auto">
-        <Table className="min-w-full divide-y shadow">
-          <TableCaption>List of Coins</TableCaption>
+
+      <div className="overflow-x-auto px-4 py-2">
+        <Table className="min-w-full divide-y shadow-lg rounded-lg bg-white">
+          <TableCaption className="text-lg font-medium text-gray-600">
+            List of Coins
+          </TableCaption>
           <TableHeader>
-            <TableRow>
-              <TableHead>Image</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Price</TableHead>
-              <TableHead>Discount Price</TableHead>
-              <TableHead>Total Coins</TableHead>
-              <TableHead className="text-right">Action</TableHead>
+            <TableRow className="bg-gray-100">
+              <TableHead className="p-4 text-gray-600">Image</TableHead>
+              <TableHead className="p-4 text-gray-600">Name</TableHead>
+              <TableHead className="p-4 text-gray-600">Price</TableHead>
+              <TableHead className="p-4 text-gray-600">
+                Discount Price
+              </TableHead>
+              <TableHead className="p-4 text-gray-600">Total Coins</TableHead>
+              <TableHead className="p-4 text-gray-600 text-right">
+                Action
+              </TableHead>
             </TableRow>
           </TableHeader>
+
           <TableBody>
             {coinData.length > 0 ? (
               coinData.map((curElem) => (
-                <TableRow key={curElem.id}>
-                  <TableCell>
+                <TableRow
+                  key={curElem.id}
+                  className="hover:bg-gray-50 transition-colors duration-200"
+                >
+                  <TableCell className="p-4">
                     <Link href={`/coin/${curElem.id}`}>
                       <img
-                        className="coin-image w-10 h-10"
+                        className="coin-image w-12 h-12 rounded-full border border-gray-300"
                         src="./images/coin.png"
                         alt="Digital currency image"
-                        width="10%"
                       />
                     </Link>
                   </TableCell>
-                  <TableCell className="font-medium">{curElem.name}</TableCell>
-                  <TableCell>{curElem.price}</TableCell>
-                  <TableCell>{curElem.discountedPrice}</TableCell>
-                  <TableCell>{curElem.coinAmount}</TableCell>
-                  <TableCell className="text-right flex items-center justify-end gap-2">
+                  <TableCell className="font-medium p-4">
+                    {curElem.name}
+                  </TableCell>
+                  <TableCell className="p-4 text-gray-700">
+                    {curElem.price}
+                  </TableCell>
+                  <TableCell className="p-4 text-gray-700">
+                    {curElem.discountedPrice}
+                  </TableCell>
+                  <TableCell className="p-4 text-gray-700">
+                    {curElem.coinAmount}
+                  </TableCell>
+                  <TableCell className="text-right p-4 flex items-center justify-end gap-2">
                     <Link href={`/coin/update/${curElem.id}`}>
-                      <Button>Edit</Button>
+                      <Button className="bg-yellow-500 text-white hover:bg-yellow-600 transition duration-300">
+                        Edit
+                      </Button>
                     </Link>
                     <Link href={`/coin/${curElem.id}`}>
-                      <Button>View</Button>
+                      <Button className="bg-green-500 text-white hover:bg-green-600 transition duration-300">
+                        View
+                      </Button>
                     </Link>
                   </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={4} className="w-full h-screen text-center">
-                  <div className="flex justify-center items-center min-h-screen">
-                    <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
+                <TableCell colSpan={6} className="p-4 text-center">
+                  <div className="flex justify-center items-center h-32">
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-600 border-solid"></div>
                   </div>
                 </TableCell>
               </TableRow>

@@ -56,7 +56,7 @@ export function AppSidebar() {
         <SidebarContent>
           <SidebarGroup>
             <div className="flex  items-center justify-between mb-4">
-              <SidebarGroupLabel className="text-lg">
+              <SidebarGroupLabel className="text-xl">
                 Alturalabz
               </SidebarGroupLabel>
             </div>
@@ -68,7 +68,7 @@ export function AppSidebar() {
                     <SidebarMenuButton asChild>
                       <Link href={item.url}>
                         <item.icon />
-                        <span>{item.title}</span>
+                        <span className="text-base">{item.title}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
