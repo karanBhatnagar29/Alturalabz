@@ -6,6 +6,7 @@ import { useParams } from "next/navigation"; // Use `useParams` hook for dynamic
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { FaDollarSign } from "react-icons/fa";
+import Link from "next/link";
 
 interface GetCoin {
   name: string;
@@ -44,43 +45,39 @@ const Page = () => {
         <img
           src="/images/coin.png"
           alt={getCoin?.name}
-          className="w-16 h-16 object-cover rounded-full border-4 "
+          className="w-20 h-20 object-cover rounded-full border-4 "
         />
-        <div className="flex items-center gap-4">
-          <Button className=" hover:bg-blue-600 transition-all duration-300">
-            Edit
-          </Button>
-          <Button className="bg-red-500 text-white hover:bg-red-600 transition-all duration-300">
-            Delete
-          </Button>
+        <div className="flex items-center gap-2">
+          <Link href={`/coin/update/${id}`}>
+            <Button className=" transition-all duration-300">Edit</Button>
+          </Link>
+          <Link href="/coin">
+            <Button>Back</Button>
+          </Link>
         </div>
       </div>
 
       {/* Coin Price Section */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
-        <div className="flex items-center justify-center gap-3  p-4 rounded-xl border-2">
-          <FaDollarSign className="text-xl text-green-500" />
+        <div className="flex items-center justify-center gap-1 p-4 rounded-xl border-2 ">
+          <FaDollarSign className="text-3xl text-green-400" />
           <div className="text-lg">
-            <span className="font-semibold">Current Price</span>
-            <p className="text-2xl font-bold text-green-600">
-              {getCoin?.discountedPrice}
-            </p>
+            <span className="font-semibol">Current Price</span>
+            <p className="text-2xl font-bold">{getCoin?.discountedPrice}</p>
           </div>
         </div>
-        <div className="flex items-center justify-center gap-3  p-4 rounded-xl border-2">
-          <FaDollarSign className="text-xl text-orange-500" />
+        <div className="flex items-center justify-center gap-1 ga p-4 rounded-xl border-2 ">
+          <FaDollarSign className="text-3xl text-orange-400" />
           <div className="text-lg">
-            <span className="font-semibold ">Original Price</span>
-            <p className="text-2xl font-bold text-orange-600">
-              {getCoin?.price}
-            </p>
+            <span className="font-semibol">Original Price</span>
+            <p className="text-2xl font-bold ">{getCoin?.price}</p>
           </div>
         </div>
-        <div className="flex items-center justify-center gap-3  p-4 rounded-xl border-2">
-          <FaDollarSign className="text-xl text-gray-500" />
+        <div className="flex items-center justify-center gap-1 p-4 rounded-xl border-2 ">
+          <FaDollarSign className="text-3xl" />
           <div className="text-lg">
             <span className="font-semibold ">Coin Amount</span>
-            <p className="text-2xl font-bold">{getCoin?.coinAmount}</p>
+            <p className="text-2xl font-bold ">{getCoin?.coinAmount}</p>
           </div>
         </div>
       </div>
