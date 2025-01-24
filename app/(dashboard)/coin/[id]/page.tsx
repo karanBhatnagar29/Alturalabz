@@ -52,7 +52,9 @@ const Page = () => {
             <Button className=" transition-all duration-300">Edit</Button>
           </Link>
           <Link href="/coin">
-            <Button>Back</Button>
+            <Button className="hover:bg-red-600 transition duration-300">
+              Back
+            </Button>
           </Link>
         </div>
       </div>

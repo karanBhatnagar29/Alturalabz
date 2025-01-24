@@ -5,7 +5,6 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-// import { IoArrowBackOutline } from "react-icons/io5";
 import { useToast } from "@/hooks/use-toast";
 
 const Page = ({ params }: { params: Promise<{ id: number }> }) => {
@@ -39,7 +38,7 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
     const url = `https://monetary-backend.workuplift.com/v1/coin-bundle/${id}`;
     try {
       const res = await axios.get(url);
-      if (res.status === 200) {
+      if (res.status === 200 || 201) {
         setCoinData(res.data.data);
       } else {
         <div>loading.....</div>;
@@ -57,7 +56,16 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setCoinData((prev) => (prev ? { ...prev, [name]: value } : null));
+
+    setCoinData((prev) => {
+      if (!prev) return null;
+
+      // Convert numeric fields to numbers
+      const numericFields = ["price", "discountedPrice", "coinAmount"];
+      const updatedValue = numericFields.includes(name) ? Number(value) : value;
+
+      return { ...prev, [name]: updatedValue };
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -90,7 +98,7 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
               type="text"
               id="name"
               name="name"
-              className="mt-1 block w-full rounded-md shadow-sm p-2  sm:text-sm"
+              className="w-full p-3 rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
               placeholder="Enter product name"
               value={coinData?.name || ""}
               onChange={handleInputChange}
@@ -106,7 +114,7 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
               id="description"
               name="description"
               rows={4}
-              className="mt-1 block w-full  rounded-md shadow-sm p-2 sm:text-sm"
+              className="w-full p-3 rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 "
               placeholder="Enter product description"
               value={coinData?.description || ""}
               onChange={handleInputChange}
@@ -122,8 +130,8 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
               type="number"
               id="price"
               name="price"
-              className="mt-1 block w-full rounded-md shadow-sm p-2 sm:text-sm"
-              value={coinData?.price || ""}
+              className="w-full p-3 rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 "
+              value={Number(coinData?.price) || 0}
               onChange={handleInputChange}
             />
           </div>
@@ -137,8 +145,8 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
               type="number"
               id="discountedPrice"
               name="discountedPrice"
-              className="mt-1 block w-full rounded-md shadow-sm p-2 sm:text-sm"
-              value={coinData?.discountedPrice || ""}
+              className="w-full p-3 rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              value={Number(coinData?.discountedPrice) || 0}
               onChange={handleInputChange}
             />
           </div>
@@ -152,8 +160,8 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
               type="number"
               id="coinAmount"
               name="coinAmount"
-              className="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 sm:text-sm"
-              value={coinData?.coinAmount || ""}
+              className="w-full p-3 rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 "
+              value={Number(coinData?.coinAmount) || 0}
               onChange={handleInputChange}
             />
           </div>
@@ -173,7 +181,7 @@ const Page = ({ params }: { params: Promise<{ id: number }> }) => {
               Update
             </Button>
             <Link href="/coin">
-              <Button>
+              <Button className="hover:bg-red-600 transition duration-300">
                 {/* <IoArrowBackOutline /> */}
                 Cancel
               </Button>

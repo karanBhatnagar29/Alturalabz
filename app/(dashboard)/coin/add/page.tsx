@@ -11,12 +11,12 @@ const Page = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
-    price: "",
-    discountedPrice: "",
-    coinAmount: "",
+    price: Number(""),
+    discountedPrice: Number(""),
+    coinAmount: Number(""),
     description: "",
-    img: "",
   });
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const router = useRouter();
 
@@ -27,20 +27,70 @@ const Page = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Debugging: Log form data
+    console.log("Submitting form data:", formData);
+
+    // Validate required fields
+    if (!formData.name || !formData.price || !formData.coinAmount) {
+      toast({
+        title: "Error!",
+        description: "Name, Price, and Coin Amount are required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const url = "https://monetary-backend.workuplift.com/v1/coin-bundle";
+    const formDataObj = {
+      name: formData.name,
+      price: Number(formData.price),
+      discountedPrice: Number(formData.discountedPrice),
+      coinAmount: Number(formData.coinAmount),
+      description: formData.description,
+      img: { imagePreview },
+    };
+
+    // Add image file if present
+
     try {
-      const res = await axios.post(url, formData);
-      if (res.status === 200) {
+      const res = await axios.post(url, formDataObj);
+      console.log(res.status);
+      if (res.status === 200 || 201) {
         toast({
           title: "Success!",
           description: "Coin added successfully!",
+          variant: "default",
         });
         router.push("/coin");
       }
     } catch (error) {
-      console.error("Error adding product:", error);
+      if (axios.isAxiosError(error)) {
+        console.error(
+          "Error adding product:",
+          error.response?.data || error.message
+        );
+      } else {
+        console.error("Error adding product:", error);
+      }
+      toast({
+        title: "Error!",
+        description: "Failed to add coin. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -49,13 +99,25 @@ const Page = () => {
       {/* Left Section: Image Upload */}
       <div className="border-2 rounded-lg p-8 flex flex-col items-center justify-center">
         <img
-          src={formData.img || "../images/coin.png"}
+          src={imagePreview || "../images/coin.png"}
           alt="Product Preview"
           className="w-50 h-40 object-cover rounded-full border-4 border-gray-600 shadow-md"
         />
-        <Button className="mt-6 hover:bg-blue-700 transition duration-300">
-          Upload Image
-        </Button>
+        <label
+          htmlFor="img"
+          className="cursor-pointer bg-black text-white mt-4 px-4 py-2 rounded-md shadow hover:bg-blue-600 transition duration-300"
+        >
+          Upload File
+        </label>
+        <input
+          id="img"
+          type="file"
+          className="hidden"
+          onChange={handleFileChange}
+        />
+        <span id="file-name" className="text-gray-600 text-sm">
+          {imagePreview ? "File selected" : "No file selected"}
+        </span>
       </div>
 
       {/* Right Section: Form */}
@@ -74,7 +136,7 @@ const Page = () => {
               value={formData.name}
               onChange={handleInputChange}
               required
-              className="w-full p-3  rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full p-3 rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
 
@@ -91,7 +153,7 @@ const Page = () => {
               value={formData.price}
               onChange={handleInputChange}
               required
-              className="w-full p-3  rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full p-3 rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
 
@@ -108,7 +170,7 @@ const Page = () => {
               value={formData.discountedPrice}
               onChange={handleInputChange}
               required
-              className="w-full p-3  rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full p-3 rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
 
@@ -125,7 +187,7 @@ const Page = () => {
               value={formData.coinAmount}
               onChange={handleInputChange}
               required
-              className="w-full p-3  rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full p-3 rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             />
           </div>
 
@@ -142,20 +204,20 @@ const Page = () => {
               value={formData.description}
               onChange={handleInputChange}
               required
-              className="w-full p-3  rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full p-3 rounded-lg border border-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600"
             ></textarea>
           </div>
 
           {/* Actions */}
           <div className="flex justify-between items-center">
             <Link href="/coin">
-              <Button className=" hover:bg-red-600 transition duration-300">
+              <Button className="hover:bg-red-600 transition duration-300">
                 Cancel
               </Button>
             </Link>
             <Button
               type="submit"
-              className=" hover:bg-green-700 transition duration-300"
+              className="hover:bg-green-700 transition duration-300"
             >
               Add Product
             </Button>

@@ -1,5 +1,13 @@
 "use client";
-import { Calendar, Coins, Home, Search, Settings, User } from "lucide-react";
+import {
+  Calendar,
+  Coins,
+  Home,
+  Search,
+  Settings,
+  Tv,
+  User,
+} from "lucide-react";
 import Link from "next/link";
 import {
   Sidebar,
@@ -31,6 +39,11 @@ const items = [
     title: "Coin Bundle",
     url: "/coin",
     icon: Coins,
+  },
+  {
+    title: "Stream",
+    url: "/stream",
+    icon: Tv,
   },
   {
     title: "Calendar",
